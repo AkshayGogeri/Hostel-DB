@@ -1,0 +1,55 @@
+$sql = "SELECT * FROM student where mess_id in".
+		"(SELECT mess_id FROM messs where mess_name='North')";  
+
+$sql = "(SELECT SUM(fees_paid) FROM student_transaction where usn in".
+		"(SELECT usn FROM student where block_num in".
+		"(select block_num FROM Manager where Mgr_id='$id'))".
+		")"; 
+
+$sql = "SELECT * FROM student where usn in".
+		"(SELECT usn FROM student_ph_no where ph_no='$pno')";
+
+$sql = "SELECT * FROM student where usn not in".
+		"(SELECT usn FROM student_transaction GROUP BY usn Having SUM(fees_paid)>=100000)";  
+
+$sql="(select usn,(100000-fees_paid) from student_transaction where fees_paid in 
+(select sum(fees_paid) as fees_paid from student_transaction group by usn having fees_paid<100000))";
+
+$sql=	"select * from student where Room_num in (select Room_num from student where usn='$x')and usn!='$x' 
+and block_num in(select Block_num from student where usn='$x')";
+
+$sql=	"(select * from (select * from (select * from (student natural join messs))as 
+temp1 natural join manager)as temp2 natural join student_transaction); ";
+
+$sql=	"(select * from (select * from (select * from (student natural join messs))
+as temp1 natural join manager)as temp2 natural join student_transaction where usn='$usn'); ";
+
+$sql="select usn from student where usn not in (select usn from student_transaction)";
+
+$sql="select room_num,block_num from hostel_rooms where (room_num,block_num) not in
+ (select room_num,block_num from student)";
+
+$sql="select s1.name,s1.room_num,s1.mess_id from student s1,student s2 where 
+((s1.room_num=s2.room_num) and (s1.mess_id=s2.mess_id) and (s1.block_num=s2.block_num) 
+and s1.usn!=s2.usn)";
+
+	$sql="select mess_name from messs where mess_id in(select mess_id from student 
+	where usn in (select usn  from student_transaction where reciept_num='$x'))";
+
+$sql="select Mgr_name from Manager where Block_num in(select Block_num from student
+ where usn in(select usn from lg_ph_no where ph_no='$x'))";
+
+$sql="select name from student where block_num in(select block_num from manager where
+ mgr_id='$x')";
+
+$sql="select usn,name,dept_name from student where room_num='$x' and block_num='$y'"; 
+
+$sql="select usn,ph_no from student_ph_no where usn in(select usn from student where 
+mess_id in(select mess_id from messs where mess_name='$x'and block_num='$y'))";
+
+$sql="select ph_no from student_ph_no where usn in (select  usn from student 
+where room_num in(select room_num from student where usn in
+(select usn from student_ph_no where ph_no='$x')) a
+nd block_num in(select block_num from student 
+where usn in(select usn from student_ph_no where ph_no='$x')))";
+	
